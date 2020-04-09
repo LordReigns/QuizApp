@@ -5,27 +5,23 @@ const api = {
   base: "http://jservice.io/api/clues/",
 };
 class question extends Component {
-  _isMounted = false;
+  _isMounted = false; //to make sure the component is mounted before using setState
   state = {
     questions: [],
   };
   componentDidMount() {
     this._isMounted = true;
-    axios.get(`${api.base}?id=11532`).then((res) => {
+    console.log(this.props.category);
+    //get question from category using id parameter
+    axios.get(`${api.base}?category=${this.props.category}`).then((res) => {
       if (this._isMounted) {
         this.setState({ questions: res.data });
-        console.log(res.data);
+        console.log(this.state.questions);
       }
     });
   }
   render() {
-    return this.state.questions.map((question) => {
-      return question.question !== "" ? (
-        <QuestionItem question={question} />
-      ) : (
-        ""
-      );
-    });
+    return <QuestionItem question={this.state.questions} />;
   }
 }
 
