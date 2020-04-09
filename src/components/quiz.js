@@ -7,8 +7,7 @@ class Quiz extends React.Component {
     id: "",
   };
   getCategory = (e) => {
-    console.log(e.target.getAttribute("title"));
-    this.setState({ id: e.target.getAttribute("title") });
+    this.setState({ id: e.target.getAttribute("title") }); //get id value in title attribute from h2 tag and set it to the state
   };
   render() {
     return (
@@ -27,8 +26,8 @@ class Quiz extends React.Component {
                     style={{ textDecoration: "none" }}
                     onClick={this.getCategory}
                   >
-                    <div className="card" value={"7580"}>
-                      <h2 title="animal words \u0026 phrases">Animal Words</h2>
+                    <div className="card">
+                      <h2 title="7580">Animal Words</h2>
                     </div>
                   </Link>
 
@@ -39,7 +38,7 @@ class Quiz extends React.Component {
                     onClick={this.getCategory}
                   >
                     <div className="card">
-                      <h2>World city walk</h2>
+                      <h2 title="11498">World city walk</h2>
                     </div>
                   </Link>
 
@@ -50,7 +49,7 @@ class Quiz extends React.Component {
                     onClick={this.getCategory}
                   >
                     <div className="card">
-                      <h2>Tough pourri</h2>
+                      <h2 title="11499">Tough pourri</h2>
                     </div>
                   </Link>
 
@@ -61,7 +60,7 @@ class Quiz extends React.Component {
                     onClick={this.getCategory}
                   >
                     <div className="card">
-                      <h2>Fill in the history____</h2>
+                      <h2 title="11542">Fill in the history____</h2>
                     </div>
                   </Link>
 
@@ -72,7 +71,7 @@ class Quiz extends React.Component {
                     onClick={this.getCategory}
                   >
                     <div className="card">
-                      <h2>World wide webs</h2>
+                      <h2 title="11562">World wide webs</h2>
                     </div>
                   </Link>
 
@@ -83,7 +82,7 @@ class Quiz extends React.Component {
                     onClick={this.getCategory}
                   >
                     <div className="card">
-                      <h2>To the lighthouse</h2>
+                      <h2 title="11556">To the lighthouse</h2>
                     </div>
                   </Link>
 
@@ -94,7 +93,7 @@ class Quiz extends React.Component {
                     onClick={this.getCategory}
                   >
                     <div className="card">
-                      <h2>Story tellers</h2>
+                      <h2 title="618">Story tellers</h2>
                     </div>
                   </Link>
                 </div>
@@ -103,9 +102,7 @@ class Quiz extends React.Component {
           />
           <Route
             path="/category/question"
-            render={(props) => (
-              <Question category={this.state.title} {...props} />
-            )}
+            render={(props) => <Question category={this.state.id} {...props} />}
           />
         </div>
       </Router>
