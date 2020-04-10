@@ -13,9 +13,11 @@ export class questionItem extends Component {
     ) {
       this.setState({ question: this.props.question[`${id}`] });
     }
+    this.setState({ loading: true })
   }
   componentWillUnmount() {
     id = 0; // if user goes back to home id resets back to 0
+
   }
   getNext = () => {
     console.log(id);
@@ -35,31 +37,33 @@ export class questionItem extends Component {
     return (
       <div style={{ width: "25%", margin: "auto" }}>
         {this.props.question &&
-        typeof this.props.question[`${id}`] != "undefined" ? (
-          <div
-            style={{
-              height: "500px",
-              backgroundColor: "#ff933b",
-              margin: "20px 0px",
-              paddingTop: "50%",
-            }}
-          >
-            <p>{this.props.question[`${id}`].question}</p>
-            <button
-              onClick={this.getNext}
+          typeof this.props.question[`${id}`] != "undefined" ? (
+            <div
               style={{
-                display: "flex",
-                marginTop: "150px",
-                marginLeft: "300px",
-                padding: "30px",
+                height: "500px",
+                backgroundColor: "#ff933b",
+                margin: "20px 0px",
+                paddingTop: "50%",
+                transition: "3s",
+                transitionTimingFunction: "e"
               }}
             >
-              NEXT
+              <p>{this.props.question[`${id}`].question}</p>
+              <button
+                onClick={this.getNext}
+                style={{
+                  display: "flex",
+                  marginTop: "150px",
+                  marginLeft: "300px",
+                  padding: "30px",
+                }}
+              >
+                NEXT
             </button>
-          </div>
-        ) : (
-          ""
-        )}
+            </div>
+          ) : (
+            ""
+          )}
       </div>
     );
   }
