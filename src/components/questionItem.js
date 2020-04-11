@@ -1,11 +1,16 @@
 import React, { Component } from "react";
+import "../App.css"
 
 var id = 0;
 
 export class questionItem extends Component {
+
   state = {
     question: [],
+    answer: ""
   };
+
+
   componentDidMount() {
     if (
       this.props.question &&
@@ -15,13 +20,31 @@ export class questionItem extends Component {
     }
     this.setState({ loading: true })
   }
+
+
   componentWillUnmount() {
     id = 0; // if user goes back to home id resets back to 0
 
   }
-  getNext = () => {
-    console.log(id);
+
+  checkAnswer() {
+    console.log(this.state.question.answer)
+    if (this.state.answer === "") {
+      alert("Answer cannot be empty")
+      return 0;
+    }
+    else if (this.state.question.answer.toUpperCase() === this.state.answer.toUpperCase())
+      return 1;
+    alert("Wrong answer")
+    this.setState({ answer: "" })
+  }
+
+  //get the next question
+  getNext() {
+
     id++;
+    this.setState({ answer: "" })
+
     if (id < this.props.question.length) {
       if (this.props.question[`${id}`].question !== "") {
         this.setState({ question: this.props.question[`${id}`] });
@@ -33,38 +56,67 @@ export class questionItem extends Component {
     }
   };
 
+  onClicks = () => {
+    if (this.checkAnswer())
+      this.getNext();
+
+  }
+
+  onKeys = (e) => {
+    if (e.keyCode === 13)
+      if (this.checkAnswer())
+        this.getNext();
+  }
+  //when btn next is clicked
+
+
+
   render() {
     return (
-      <div style={{ width: "25%", margin: "auto" }}>
+
+      <div style={{
+        width: "50%",
+        margin: "auto",
+        transition: "0.4s ease-in",
+      }}>
         {this.props.question &&
           typeof this.props.question[`${id}`] != "undefined" ? (
             <div
               style={{
-                height: "500px",
-                backgroundColor: "#ff933b",
-                margin: "20px 0px",
-                paddingTop: "50%",
-                transition: "3s",
-                transitionTimingFunction: "e"
+                height: "170px",
+                backgroundColor: "#FFAE5C",
+                margin: "100px 0px",
+                paddingTop: "60px",
+                transition: "0.4s ease"
               }}
             >
               <p>{this.props.question[`${id}`].question}</p>
-              <button
-                onClick={this.getNext}
-                style={{
-                  display: "flex",
-                  marginTop: "150px",
-                  marginLeft: "300px",
-                  padding: "30px",
-                }}
-              >
-                NEXT
+              <div style={{
+                marginTop: "200px"
+              }} >
+                <input type="text" placeholder="Answer..."
+                  value={this.state.answer}
+                  onChange={(e) => this.setState({ answer: e.target.value })}
+                  style={{
+                    padding: "10px"
+                  }}
+                  onKeyDown={this.onKeys}
+                />
+                <button
+                  style={{
+                    padding: "10px"
+                  }}
+                  onClick={this.onClicks}>
+                  NEXT
             </button>
+              </div>
             </div>
           ) : (
             ""
           )}
       </div>
+
+
     );
   }
 }

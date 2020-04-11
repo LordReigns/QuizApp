@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import QuestionItem from "./questionItem";
 import Loader from "./loader"
 import axios from "axios";
+import "../App.css"
 const api = {
   base: "http://jservice.io/api/clues/",
 };
@@ -29,9 +30,9 @@ class question extends Component {
     if (this._isNotMounted)
       return <Loader />
     return (
-      <div>
-        <QuestionItem question={this.state.questions} />
-      </div>
+
+      <QuestionItem question={this.state.questions} />
+
     );
   }
 }
