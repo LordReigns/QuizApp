@@ -7,7 +7,10 @@ export class questionItem extends Component {
 
   state = {
     question: [],
-    answer: ""
+    answer: "",
+    score: 0,
+    done: 0
+
   };
 
 
@@ -33,8 +36,12 @@ export class questionItem extends Component {
       alert("Answer cannot be empty")
       return 0;
     }
-    else if (this.state.question.answer.toUpperCase() === this.state.answer.toUpperCase())
+    else if (this.state.question.answer.toUpperCase() === this.state.answer.toUpperCase()) {
+      let temp = this.state.score;
+      temp += this.state.question.value;
+      this.setState({ score: temp })
       return 1;
+    }
     alert("Wrong answer")
     this.setState({ answer: "" })
   }
@@ -53,12 +60,15 @@ export class questionItem extends Component {
       }
     } else {
       alert("All questions Answered");
+      this.setState({ done: 1 })
+
     }
   };
 
   onClicks = () => {
-    if (this.checkAnswer())
+    if (this.checkAnswer()) {
       this.getNext();
+    }
 
   }
 
@@ -72,12 +82,24 @@ export class questionItem extends Component {
 
 
   render() {
+    if (this.state.done)
+      return (<div
+        style={{
+          height: "170px",
+          backgroundColor: "#FFAE5C",
+          margin: "100px 0px",
+          paddingTop: "60px",
+          transition: "0.8s ease"
+        }}
+      ><p>YOUR FINAL SCORE: <span>{this.state.score}</span></p>
+      </div>
+      )
     return (
 
       <div style={{
         width: "50%",
         margin: "auto",
-        transition: "0.4s ease-in",
+        transition: "0.8s ease" // not working
       }}>
         {this.props.question &&
           typeof this.props.question[`${id}`] != "undefined" ? (
@@ -87,12 +109,13 @@ export class questionItem extends Component {
                 backgroundColor: "#FFAE5C",
                 margin: "100px 0px",
                 paddingTop: "60px",
-                transition: "0.4s ease"
+
               }}
             >
               <p>{this.props.question[`${id}`].question}</p>
               <div style={{
-                marginTop: "200px"
+                marginTop: "200px",
+
               }} >
                 <input type="text" placeholder="Answer..."
                   value={this.state.answer}
@@ -104,11 +127,14 @@ export class questionItem extends Component {
                 />
                 <button
                   style={{
-                    padding: "10px"
+                    padding: "10px 50px"
                   }}
                   onClick={this.onClicks}>
                   NEXT
             </button>
+              </div><div>
+                <p style={{ fontSize: "40px", marginTop: "100px" }}>Score:
+                <span>{this.state.score}</span></p>
               </div>
             </div>
           ) : (

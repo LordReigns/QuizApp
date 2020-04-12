@@ -30,10 +30,7 @@ class question extends Component {
     if (this._isNotMounted)
       return <Loader />
     return (
-
-      <QuestionItem question={this.state.questions} />
-
-    );
+      <QuestionItem question={this.state.questions} />)
   }
 }
 
