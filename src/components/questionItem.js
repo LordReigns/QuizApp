@@ -8,8 +8,9 @@ export class questionItem extends Component {
     question: [],
     answer: "",
     score: 0,
+    TotalScore: 0,
     done: 0,
-    errorCode: 0, //error codes 0: no error 1: empty answer 2: wrong answer
+    errorCode: 0, //error codes 0: no error 1:
   };
 
   componentDidMount() {
@@ -27,6 +28,7 @@ export class questionItem extends Component {
   }
 
   checkAnswer() {
+    let temp = this.state.score;
     console.log(this.state.question.answer);
     if (this.state.answer === "") {
       this.setState({ errorCode: 1 });
@@ -36,14 +38,18 @@ export class questionItem extends Component {
       this.state.question.answer.toUpperCase() ===
       this.state.answer.toUpperCase()
     ) {
-      let temp = this.state.score;
       temp += this.state.question.value;
-      this.setState({ score: temp });
+      this.setState({
+        score: temp,
+        TotalScore: this.state.question.value + this.state.TotalScore,
+      });
       return 1;
     } else {
-      this.setState({ errorCode: 2 });
-      setTimeout(() => this.setState({ errorCode: 0 }), 2000);
-      return 0;
+      this.setState({
+        score: temp,
+        TotalScore: this.state.question.value + this.state.TotalScore,
+      });
+      return 1;
     }
   }
 
@@ -88,7 +94,8 @@ export class questionItem extends Component {
           }}
         >
           <p>
-            YOUR FINAL SCORE: <span>{this.state.score}</span>
+            YOUR FINAL SCORE: <span>{this.state.score}</span> OUT OF{" "}
+            <span>{this.state.TotalScore}</span>
           </p>
         </div>
       );
